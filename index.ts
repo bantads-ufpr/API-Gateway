@@ -221,20 +221,6 @@ app
             return res.status(error.response.status).json(error.response.data);
         }
     })
-    .put("/conta/:id", async (req: any, res: Response) => {
-        try {
-            const response = await axios.put(
-                `${contaService}/${req.params.id}`,
-                {
-                    ...req.body,
-                }
-            );
-
-            return res.json(response.data);
-        } catch (error: any) {
-            return res.status(error.response.status).json(error.response.data);
-        }
-    })
 
     // TRANSACAO
     .get(
@@ -242,8 +228,8 @@ app
         async (req: any, res: Response) => {
             try {
                 const response = await axios.get(
-                    `${transacaoService}?
-                    idCliente=${req.params.idCliente}
+                    `${transacaoService}
+                    ?idCliente=${req.params.idCliente}
                     &dataInicial=${req.params.dataInicial}
                     &dataFinal=${req.params.dataFinal}`
                 );
@@ -269,10 +255,10 @@ app
             return res.status(error.response.status).json(error.response.data);
         }
     })
-    .get("/cliente?email=:email", async (req: any, res: Response) => {
+    .get("/cliente/email/:email", async (req: any, res: Response) => {
         try {
             const response = await axios.get(
-                `${clienteService}?email=${req.params.email}`
+                `${clienteService}/email/${req.params.email}`
             );
 
             return res.json(response.data);
@@ -293,10 +279,10 @@ app
             return res.status(error.response.status).json(error.response.data);
         }
     })
-    .get("/gerente?email=:email", async (req: any, res: Response) => {
+    .get("/gerente/email/:email", async (req: any, res: Response) => {
         try {
             const response = await axios.get(
-                `${gerenteService}?email=${req.params.email}`
+                `${gerenteService}/email/${req.params.email}`
             );
 
             return res.json(response.data);
