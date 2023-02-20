@@ -1,22 +1,15 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-      "module": "System",
-      "outDir": "./built",
-      "allowJs": true,
-      "target": "es5",
-      "allowUnreachableCode": false,
-      "noImplicitReturns": true,
-      "noImplicitAny": true,
-      "typeRoots": [ "./typings" ],
-      "outFile": "./built/combined.js"
-  },
-  "include": [
-      "./**/*"
-  ],
-  "exclude": [
-      "./plugins/**/*",
-      "./typings/**/*",
-      "./built/**/*"
-  ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "CommonJS",
+        "outDir": "./built",
+        "allowJs": true,
+        "target": "es5",
+        "allowUnreachableCode": false,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "typeRoots": ["./typings"]
+    },
+    "include": ["./**/*"],
+    "exclude": ["./plugins/**/*", "./typings/**/*", "./built/**/*"]
 }
