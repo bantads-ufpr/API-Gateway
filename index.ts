@@ -54,17 +54,19 @@ app
             });
 
             if (response.data) {
-                const id = response.data;
+                const id = response.data.id;
                 const token = jwt.sign({ id }, process.env.SECRET, {
                     expiresIn: 3000000,
                 });
-                return res.json({ auth: true, token: token });
+                return res.json({
+                    auth: true,
+                    token: token,
+                    user: response.data,
+                });
             }
-            res.status(500).json({ message: "Login inválido!" });
+            return res.json({ auth: false, message: "Login inválido!" });
         } catch (error: any) {
-            return res
-                .status(error.status ? error.status : 400)
-                .json({ ERROR: error.message });
+            return res.json({ auth: false, message: "Login inválido!" });
         }
     })
     .post("/logout", function (req: any, res: any) {
