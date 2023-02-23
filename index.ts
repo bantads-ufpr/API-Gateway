@@ -74,55 +74,6 @@ app
     })
 
     // SAGA
-    .put("/conta/saque/:id", verifyJWT, async (req: any, res: any) => {
-        try {
-            const response = await axios.put(
-                `${sagaService}/conta/saque/${req.params.id}`,
-                {
-                    ...req.body,
-                }
-            );
-            return res.json(response.data);
-        } catch (error: any) {
-            return res
-                .status(error.status ? error.status : 400)
-                .json({ ERROR: error.message });
-        }
-    })
-    .put("/conta/deposito/:id", verifyJWT, async (req: any, res: any) => {
-        try {
-            const response = await axios.put(
-                `${sagaService}/conta/deposito/${req.params.id}`,
-                {
-                    ...req.body,
-                }
-            );
-            return res.json(response.data);
-        } catch (error: any) {
-            return res
-                .status(error.status ? error.status : 400)
-                .json({ ERROR: error.message });
-        }
-    })
-    .put(
-        "/conta/transferencia?idOrigem=:idOrigem&idDestino=:idDestino",
-        verifyJWT,
-        async (req: any, res: any) => {
-            try {
-                const response = await axios.put(
-                    `${sagaService}/conta/transferencia?idOrigem=${req.params.idOrigem}&idDestino=${req.params.idDestino}`,
-                    {
-                        ...req.body,
-                    }
-                );
-                return res.json(response.data);
-            } catch (error: any) {
-                return res
-                    .status(error.status ? error.status : 400)
-                    .json({ ERROR: error.message });
-            }
-        }
-    )
     .post("/cliente", verifyJWT, async (req: any, res: any) => {
         try {
             const response = await axios.post(`${sagaService}/cliente`, {
@@ -205,10 +156,26 @@ app
     })
 
     // CONTA
+    .put("/conta/:id", verifyJWT, async (req: any, res: any) => {
+        try {
+            delete req.body["id"];
+            const response = await axios.put(
+                `${contaService}/${req.params.id}`,
+                {
+                    ...req.body,
+                }
+            );
+            return res.json(response.data);
+        } catch (error: any) {
+            return res
+                .status(error.status ? error.status : 400)
+                .json({ ERROR: error.message });
+        }
+    })
     .get("/conta/cliente/:id", verifyJWT, async (req: any, res: Response) => {
         try {
             const response = await axios.get(
-                `${contaService}?idCliente=${req.params.id}`
+                `${contaService}/cliente/${req.params.id}`
             );
 
             return res.json(response.data);
@@ -221,7 +188,7 @@ app
     .get("/conta/gerente/:id", verifyJWT, async (req: any, res: Response) => {
         try {
             const response = await axios.get(
-                `${contaService}?idGerente=${req.params.id}`
+                `${contaService}/gerente/${req.params.id}`
             );
 
             return res.json(response.data);
@@ -237,7 +204,7 @@ app
         async (req: any, res: Response) => {
             try {
                 const response = await axios.get(
-                    `${contaService}?idGerente=${req.params.id}&ativo=${req.params.ativo}`
+                    `${contaService}/gerente/${req.params.id}&ativo=${req.params.ativo}`
                 );
 
                 return res.json(response.data);
@@ -280,6 +247,19 @@ app
     )
 
     // TRANSACAO
+    .post("/transacao", verifyJWT, async (req: any, res: Response) => {
+        try {
+            const response = await axios.post(`${transacaoService}`, {
+                ...req.body,
+            });
+
+            return res.json(response.data);
+        } catch (error: any) {
+            return res
+                .status(error.status ? error.status : 400)
+                .json({ ERROR: error.message });
+        }
+    })
     .get(
         "/transacao/:idCliente/:dataInicial/:dataFinal",
         verifyJWT,
